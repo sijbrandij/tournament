@@ -8,6 +8,11 @@ This code includes the setup of a database scheme to store the game matches betw
 1. PostgreSQL
 2. Python
 
+## Setup
+1. start a postgresql console by typing ```psql``` in a terminal
+2. Go to the tournament folder on your system
+3. setup the database, tables and switch to this database by typing ```\i tournament.sql```
+
 ## Test instructions
 To run the tests, run
 ```
