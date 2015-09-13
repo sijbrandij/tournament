@@ -72,14 +72,17 @@ def playerStandings():
     for player in results:
         c.execute("select id from players where name = %s", [player[0]])
         player_id = c.fetchone()
+        ## get the player
         c.execute("select num from number_of_wins where name = %s", [player[0]])
         player_wins = c.fetchone()
+        ## get the player's number of wins
         c.execute("select num from number_of_matches where name = %s", [player[0]])
         player_matches = c.fetchone()
+        ## get the player's number of matches
         standings.append((player_id[0], player[0], player_wins[0], player_matches[0]))
+        ## add player to the standings with their id, name, number of wins and number of matches
     db.close()
     return standings
-
 
 
 def reportMatch(winner, loser):
@@ -116,15 +119,21 @@ def swissPairings():
     swiss_pairings = []
     c.execute("select * from players")
     players = c.fetchall()
+    ## get all players
     for player in players:
         c.execute("select num from number_of_wins where name = %s", [player[1]])
         number_of_wins = c.fetchone()
+        ## get the player's number of wins
         c.execute("select * from number_of_wins where name != %s and num = %s", [player[1], number_of_wins[0]])
         player2_name = c.fetchone()
+        ## get a player with an equal number of wins which is not the first player
         c.execute("select * from players where name = %s", [player2_name[0]])
         player2 = c.fetchone()
+        ## get the second player's name
         players.remove(player)
         players.remove(player2)
+        ## remove players from players list because they have been paired up
         swiss_pairings.append((player[0], player[1], player2[0], player2[1]))
+        ## add the pair to the list of pairings
     db.close
     return swiss_pairings
